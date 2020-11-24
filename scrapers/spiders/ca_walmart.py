@@ -22,7 +22,7 @@ class CaWalmartSpider(scrapy.Spider):
     def parse(self, response):
         
 
-        yield scrapy.Request(url = 'https://www.walmart.ca/en/grocery/fruits-vegetables/fruits/N-3852',callback = self.parse_item,  cookies={'currency': 'USD', 'country': 'UY'},meta={'dont_merge_cookies': True},headers=self.headers)
+        yield scrapy.Request(url = 'https://www.walmart.ca/en/grocery/fruits-vegetables/fruits/N-3852',callback = self.parse_item,  cookies={'currency': 'USD', 'country': 'CO'},meta={'dont_merge_cookies': True},headers=self.headers)
     
     
     def parse_item(self, response):
@@ -32,6 +32,8 @@ class CaWalmartSpider(scrapy.Spider):
         print("LINK -> "+str(link))
         url2 = 'https://www.walmart.ca'+str(link)
         yield scrapy.Request(url = url2,callback = self.parse_intern_item,cookies={'currency': 'USD', 'country': 'UY'},meta={'dont_merge_cookies': True},headers=self.headers)
+    
+    
     def parse_intern_item(self,response):
         product_type = response.xpath('body').get()
         soup = BeautifulSoup(product_type, 'html.parser')
